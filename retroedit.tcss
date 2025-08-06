@@ -1,0 +1,120 @@
+/* RetroEdit CSS - Retro color scheme inspired by MS-DOS Edit */
+
+/* Global styles */
+Screen {
+    background: #000080;
+    color: #ffffff;
+}
+
+/* Menu bar styling */
+#menu-bar {
+    dock: top;
+    height: 1;
+    background: #008080;
+    color: #ffffff;
+}
+
+#menu-bar Button {
+    background: #008080;
+    color: #ffffff;
+    border: none;
+    margin: 0 1;
+    padding: 0 1;
+}
+
+#menu-bar Button:hover {
+    background: #00ffff;
+    color: #000000;
+}
+
+#menu-bar Button:focus {
+    background: #ffffff;
+    color: #000000;
+}
+
+#menu-spacer {
+    background: #008080;
+}
+
+/* Text editor area */
+#text-editor {
+    background: #000080;
+    color: #ffffff;
+    border: solid #ffffff;
+    margin: 1;
+}
+
+#text-area {
+    background: #000080;
+    color: #ffffff;
+}
+
+#text-area:focus {
+    border: solid #ffff00;
+}
+
+/* Status bar styling */
+#status-bar {
+    dock: bottom;
+    height: 1;
+    background: #008080;
+    color: #ffffff;
+}
+
+#status-info {
+    background: #008080;
+    color: #ffffff;
+    content-align: left middle;
+}
+
+/* Footer styling */
+Footer {
+    background: #008000;
+    color: #ffffff;
+}
+
+/* Dialog styling */
+.dialog {
+    background: #c0c0c0;
+    color: #000000;
+    border: solid #000000;
+}
+
+/* Scrollbar styling */
+Scrollbar {
+    background: #808080;
+}
+
+ScrollbarThumb {
+    background: #ffffff;
+}
+
+ScrollbarThumb:hover {
+    background: #ffff00;
+}
+
+/* Line numbers */
+.line-numbers {
+    background: #004080;
+    color: #c0c0c0;
+    text-align: right;
+    padding-right: 1;
+}
+
+/* Selection highlighting */
+.selection {
+    background: #ffffff;
+    color: #000000;
+}
+
+/* Error messages */
+.error {
+    background: #ff0000;
+    color: #ffffff;
+}
+
+/* Success messages */
+.success {
+    background: #008000;
+    color: #ffffff;
+}

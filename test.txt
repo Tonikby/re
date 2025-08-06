@@ -1,0 +1,12 @@
+Hello, RetroEdit!
+
+This is a test file to verify that the editor works correctly.
+
+def example_function():
+    print("Hello from Python!")
+    return True
+
+# Test various characters: áéíóú ñ ¿¡ §£€
+# Test symbols: @#$%^&*()_+-=[]{}|;:'",./<>?
+
+End of test file.

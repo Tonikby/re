@@ -1,0 +1,19 @@
+# Development Requirements for RetroEdit
+
+# Core dependencies
+-r requirements.txt
+
+# Development tools
+pytest>=7.0.0
+pytest-cov>=4.0.0
+black>=23.0.0
+flake8>=6.0.0
+mypy>=1.0.0
+
+# Documentation
+sphinx>=6.0.0
+sphinx-rtd-theme>=1.2.0
+
+# Build tools (already in requirements.txt but listed here for clarity)
+# pyinstaller>=5.0.0
+# nuitka>=1.0.0

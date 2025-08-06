@@ -1,0 +1,11 @@
+# RetroEdit Dependencies
+
+# TUI framework
+textual>=0.44.0
+
+# Text encoding detection
+chardet>=5.0.0
+
+# For packaging (optional)
+pyinstaller>=5.0.0
+nuitka>=1.0.0

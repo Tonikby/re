@@ -135,8 +135,13 @@ class TextEditor(Widget):
     def action_save_file(self) -> None:
         """Save file action"""
         if self.buffer.file_path:
-            self.save_file()
+            # Save to current file immediately
+            if self.save_file():
+                self.app.notify(f"Saved: {self.buffer.file_path.name}", severity="success")
+            else:
+                self.app.notify("Save failed", severity="error")
         else:
+            # No file path - trigger save as
             self.action_save_as_file()
     
     def action_save_as_file(self) -> None:
@@ -194,15 +199,19 @@ class TextEditor(Widget):
     
     def action_find(self) -> None:
         """Find action"""
-        self.app.notify("Find functionality not yet implemented")
+        from .dialogs import FindReplaceDialog
+        self.app.push_screen(FindReplaceDialog())
     
     def action_replace(self) -> None:
         """Replace action"""
-        self.app.notify("Replace functionality not yet implemented")
+        from .dialogs import FindReplaceDialog
+        self.app.push_screen(FindReplaceDialog())
     
     def action_goto_line(self) -> None:
         """Go to line action"""
-        self.app.notify("Go to line functionality not yet implemented")
+        from .dialogs import GoToLineDialog
+        max_lines = self.buffer.get_line_count()
+        self.app.push_screen(GoToLineDialog(max_lines))
     
     def action_toggle_insert_mode(self) -> None:
         """Toggle insert/replace mode"""

@@ -34,6 +34,7 @@ class RetroEditConfig:
     
     # Theme settings
     retro_colors: bool = True
+    black_background: bool = True  # True = black theme (default), False = blue theme
     
     def save_to_file(self, path: Path) -> None:
         """Save configuration to a JSON file"""
@@ -48,6 +49,7 @@ class RetroEditConfig:
             "insert_mode": self.insert_mode,
             "wrap_lines": self.wrap_lines,
             "retro_colors": self.retro_colors,
+            "black_background": self.black_background,
         }
         
         with open(path, 'w', encoding='utf-8') as f:
@@ -74,6 +76,7 @@ class RetroEditConfig:
                 insert_mode=config_dict.get("insert_mode", True),
                 wrap_lines=config_dict.get("wrap_lines", False),
                 retro_colors=config_dict.get("retro_colors", True),
+                black_background=config_dict.get("black_background", True),
             )
         except (json.JSONDecodeError, KeyError):
             # Return default config if file is corrupted

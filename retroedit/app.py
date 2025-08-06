@@ -16,6 +16,9 @@ import sys
 from .ui.menu import MenuBar, MenuAction
 from .ui.status import StatusBar
 from .ui.text_editor import TextEditor, EditorUpdate
+from .ui.dialogs import (
+    SaveAsDialog, FindReplaceDialog, GoToLineDialog, OpenFileDialog, DialogResult
+)
 from .config import config
 
 
@@ -110,6 +113,9 @@ class RetroEditScreen(Screen):
         elif action.startswith("view_encoding_"):
             encoding = action.split("_")[-1].replace("utf8", "utf-8")
             self.action_set_encoding(encoding)
+        elif action.startswith("view_theme_"):
+            theme = action.split("_")[-1]
+            self.action_set_theme(theme)
         elif action == "help_about":
             self.action_show_about()
         elif action == "help_shortcuts":
@@ -119,6 +125,66 @@ class RetroEditScreen(Screen):
         """Handle editor updates"""
         self._update_status_bar()
         self._update_title()
+    
+    def on_dialog_result(self, message: DialogResult) -> None:
+        """Handle dialog results"""
+        if not message.result:
+            return
+        
+        action = message.result.get("action")
+        
+        if action == "save":
+            # Save As dialog result
+            path = message.result.get("path")
+            if path:
+                editor = self._get_editor()
+                if editor.save_file(path):
+                    self.app.notify(f"Saved: {path.name}", severity="success")
+                    self._update_status_bar()
+                    self._update_title()
+                else:
+                    self.app.notify("Save failed", severity="error")
+        
+        elif action == "open":
+            # Open file dialog result
+            path = message.result.get("path")
+            if path:
+                editor = self._get_editor()
+                try:
+                    editor.load_file(path)
+                    self._update_status_bar()
+                    self._update_title()
+                    self.app.notify(f"Opened: {path.name}", severity="success")
+                except Exception as e:
+                    self.app.notify(f"Error opening file: {e}", severity="error")
+        
+        elif action == "find":
+            # Find dialog result
+            text = message.result.get("text")
+            case_sensitive = message.result.get("case_sensitive", True)
+            if text:
+                editor = self._get_editor()
+                # TODO: Implement find functionality in text editor
+                self.app.notify(f"Find: '{text}' (case: {case_sensitive})")
+        
+        elif action == "replace" or action == "replace_all":
+            # Replace dialog result
+            find_text = message.result.get("find_text")
+            replace_text = message.result.get("replace_text")
+            case_sensitive = message.result.get("case_sensitive", True)
+            if find_text:
+                editor = self._get_editor()
+                # TODO: Implement replace functionality in text editor
+                mode = "Replace All" if action == "replace_all" else "Replace"
+                self.app.notify(f"{mode}: '{find_text}' -> '{replace_text}'")
+        
+        elif action == "goto":
+            # Go to line dialog result
+            line = message.result.get("line")
+            if line is not None:
+                editor = self._get_editor()
+                # TODO: Implement goto line functionality
+                self.app.notify(f"Go to line: {line + 1}")
     
     def _get_editor(self) -> TextEditor:
         """Get the text editor widget"""
@@ -182,24 +248,27 @@ class RetroEditScreen(Screen):
     
     def action_open_file(self) -> None:
         """Open a file"""
-        # In a full implementation, show file dialog
-        self.app.notify("Open file functionality not yet fully implemented")
+        self.app.push_screen(OpenFileDialog())
     
     def action_save_file(self) -> None:
         """Save current file"""
         editor = self._get_editor()
         if editor.get_file_path():
+            # Save to current file immediately
             if editor.save_file():
-                self.app.notify("File saved")
+                self.app.notify(f"Saved: {editor.get_file_path().name}", severity="success")
                 self._update_status_bar()
                 self._update_title()
+            else:
+                self.app.notify("Save failed", severity="error")
         else:
             self.action_save_as_file()
     
     def action_save_as_file(self) -> None:
         """Save file with new name"""
-        # In a full implementation, show save dialog
-        self.app.notify("Save As functionality not yet fully implemented")
+        editor = self._get_editor()
+        current_path = editor.get_file_path()
+        self.app.push_screen(SaveAsDialog(current_path))
     
     def action_toggle_status_bar(self) -> None:
         """Toggle status bar visibility"""
@@ -224,6 +293,17 @@ class RetroEditScreen(Screen):
         config.encoding = encoding
         self._update_status_bar()
         self.app.notify(f"Encoding: {encoding}")
+    
+    def action_set_theme(self, theme: str) -> None:
+        """Set color theme"""
+        if theme == "black":
+            config.black_background = True
+            self.app.remove_class("blue-theme")
+            self.app.notify("Theme: Black")
+        elif theme == "blue":
+            config.black_background = False
+            self.app.add_class("blue-theme")
+            self.app.notify("Theme: Blue (retro)")
     
     def action_show_help(self) -> None:
         """Show help dialog"""

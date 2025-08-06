@@ -1,70 +1,117 @@
-/* RetroEdit CSS - Retro color scheme inspired by MS-DOS Edit */
+/* RetroEdit CSS - Retro color scheme with black background default */
 
-/* Global styles */
+/* Global styles - Black background default */
 Screen {
-    background: #000080;
+    background: #000000;
     color: #ffffff;
 }
 
-/* Menu bar styling */
+/* Menu bar styling - More compact */
 #menu-bar {
     dock: top;
     height: 1;
-    background: #008080;
+    background: #000000;
     color: #ffffff;
 }
 
 #menu-bar Button {
-    background: #008080;
+    background: #000000;
     color: #ffffff;
     border: none;
-    margin: 0 1;
+    margin: 0;
     padding: 0 1;
+    min-width: 6;
 }
 
 #menu-bar Button:hover {
+    background: #333333;
+    color: #ffffff;
+}
+
+#menu-bar Button:focus {
+    background: #666666;
+    color: #ffffff;
+}
+
+#menu-spacer {
+    background: #000000;
+}
+
+/* Text editor area - No extra borders */
+#text-editor {
+    background: #000000;
+    color: #ffffff;
+    border: none;
+    margin: 0;
+}
+
+#text-area {
+    background: #000000;
+    color: #ffffff;
+    border: none;
+}
+
+#text-area:focus {
+    border: none;
+}
+
+/* Status bar styling - Pastel colors */
+#status-bar {
+    dock: bottom;
+    height: 1;
+    background: #2d2d2d;
+    color: #e0e0e0;
+}
+
+#status-info {
+    background: #2d2d2d;
+    color: #e0e0e0;
+    content-align: left middle;
+}
+
+/* Blue theme variant */
+.blue-theme Screen {
+    background: #000080;
+}
+
+.blue-theme #text-editor {
+    background: #000080;
+}
+
+.blue-theme #text-area {
+    background: #000080;
+}
+
+.blue-theme #menu-bar {
+    background: #008080;
+}
+
+.blue-theme #menu-bar Button {
+    background: #008080;
+}
+
+.blue-theme #menu-bar Button:hover {
     background: #00ffff;
     color: #000000;
 }
 
-#menu-bar Button:focus {
+.blue-theme #menu-bar Button:focus {
     background: #ffffff;
     color: #000000;
 }
 
-#menu-spacer {
+.blue-theme #menu-spacer {
     background: #008080;
 }
 
-/* Text editor area */
-#text-editor {
-    background: #000080;
-    color: #ffffff;
-    border: solid #ffffff;
-    margin: 1;
-}
-
-#text-area {
-    background: #000080;
-    color: #ffffff;
-}
-
-#text-area:focus {
-    border: solid #ffff00;
-}
-
-/* Status bar styling */
-#status-bar {
-    dock: bottom;
-    height: 1;
+.blue-theme #status-bar {
     background: #008080;
     color: #ffffff;
 }
 
-#status-info {
+.blue-theme #status-info {
     background: #008080;
     color: #ffffff;
-    content-align: left middle;
 }
 
 /* Footer styling */
@@ -78,6 +125,46 @@ Footer {
     background: #c0c0c0;
     color: #000000;
     border: solid #000000;
+}
+
+/* Dialog-specific styling */
+#save-as-dialog, #find-replace-dialog, #goto-dialog, #open-file-dialog {
+    width: 60;
+    height: auto;
+    background: #c0c0c0;
+    color: #000000;
+    border: solid #000000;
+    margin: 2;
+    padding: 1;
+}
+
+#dialog-title {
+    text-align: center;
+    text-style: bold;
+    background: #000080;
+    color: #ffffff;
+    padding: 0 1;
+}
+
+#save-as-dialog Grid, #find-replace-dialog Grid, #goto-dialog Grid, #open-file-dialog Grid {
+    grid-size: 1;
+    grid-rows: auto;
+    grid-columns: 1fr;
+    padding: 1;
+}
+
+#find-replace-dialog Grid {
+    grid-size: 1 7;
+    grid-rows: auto auto auto auto auto auto auto;
+}
+
+#save-as-dialog Input, #find-replace-dialog Input, #goto-dialog Input, #open-file-dialog Input {
+    margin: 1 0;
+}
+
+#save-as-dialog Button, #find-replace-dialog Button, #goto-dialog Button, #open-file-dialog Button {
+    margin: 0 1;
+    min-width: 8;
 }
 
 /* Scrollbar styling */

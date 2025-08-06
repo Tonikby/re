@@ -73,6 +73,11 @@ class MenuBar(Widget):
                 {"label": "Status Bar", "action": "view_status_bar", "checkable": True},
                 {"label": "Line Numbers", "action": "view_line_numbers", "checkable": True},
                 {"separator": True},
+                {"label": "Theme", "action": "view_theme", "submenu": [
+                    {"label": "Black", "action": "view_theme_black"},
+                    {"label": "Blue", "action": "view_theme_blue"},
+                ]},
+                {"separator": True},
                 {"label": "Line Endings", "action": "view_line_endings", "submenu": [
                     {"label": "CR", "action": "view_line_ending_cr"},
                     {"label": "LF", "action": "view_line_ending_lf"}, 

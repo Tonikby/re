@@ -39,6 +39,8 @@ def build_with_pyinstaller():
         "--console",
         "--name", "retroedit",
         "--add-data", "retroedit.tcss:.",
+        "--hidden-import", "retroedit",
+        "--hidden-import", "retroedit.ui",
         "main.py"
     ]
     

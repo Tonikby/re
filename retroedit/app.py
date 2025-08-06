@@ -10,11 +10,42 @@ from textual.widgets import Footer
 from textual.screen import Screen
 from pathlib import Path
 from typing import Optional
+import os
+import sys
 
 from .ui.menu import MenuBar, MenuAction
 from .ui.status import StatusBar
 from .ui.text_editor import TextEditor, EditorUpdate
 from .config import config
+
+
+def get_css_path() -> str:
+    """Get the path to the CSS file, handling both development and packaged versions"""
+    # Check if we're running in a PyInstaller bundle
+    if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
+        # PyInstaller bundle - look in the temporary directory
+        css_path = Path(sys._MEIPASS) / "retroedit.tcss"
+        if css_path.exists():
+            return str(css_path)
+        
+        # Fallback: look in the retroedit subdirectory
+        css_path = Path(sys._MEIPASS) / "retroedit" / "retroedit.tcss"
+        if css_path.exists():
+            return str(css_path)
+    
+    # Development mode - look relative to this file
+    module_dir = Path(__file__).parent
+    css_path = module_dir.parent / "retroedit.tcss"
+    if css_path.exists():
+        return str(css_path)
+    
+    # Look in the same directory as this module
+    css_path = module_dir / "retroedit.tcss"
+    if css_path.exists():
+        return str(css_path)
+    
+    # Fallback to default name (will use Textual's default styling)
+    return ""
 
 
 class RetroEditScreen(Screen):
@@ -233,10 +264,13 @@ class RetroEditScreen(Screen):
 class RetroEditApp(App):
     """Main RetroEdit application"""
     
-    CSS_PATH = "retroedit.tcss"
     TITLE = "RetroEdit"
     
     def __init__(self, **kwargs):
+        # Set CSS path dynamically
+        css_path = get_css_path()
+        if css_path:
+            self.CSS_PATH = css_path
         super().__init__(**kwargs)
         self.file_to_open: Optional[Path] = None
         self.encoding: str = "utf-8"
